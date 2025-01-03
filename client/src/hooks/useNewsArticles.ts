@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { NewsResponse } from '../types/news';
 
 const fetchNewsArticles = async ({ pageParam = 1 }): Promise<NewsResponse> => {
-  const response = await fetch(`http://localhost:3000/api/news/top-headlines?page=${pageParam}`);
+  const response = await fetch(`https://techshorts-news-server.vercel.app/api/news/top-headlines?page=${pageParam}`);
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
