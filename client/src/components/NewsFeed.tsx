@@ -19,14 +19,29 @@ export function NewsFeed() {
 
   const { bookmarks, toggleBookmark } = useBookmarks();
   const { ref, inView } = useInView({ threshold: 0.5 });
-  const prevInView = useRef(inView);
+  const debounceTimeout = useRef<number | null>(null);
+
 
   useEffect(() => {
-    if (inView && !prevInView.current && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      // Debounce fetchNextPage
+      if (!debounceTimeout.current) {
+        debounceTimeout.current = setTimeout(() => {
+          fetchNextPage();
+          debounceTimeout.current = null; // Clear timeout
+        }, 300); // Adjust debounce delay as needed
+      }
     }
-    prevInView.current = inView;
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  useEffect(() => {
+    // Cleanup timeout on unmount
+    return () => {
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
+      }
+    };
+  }, []);
 
   // Display loading state
   if (isLoading) {
