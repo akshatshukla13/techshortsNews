@@ -46,7 +46,7 @@ export function NewsCard({ article, onBookmark, isBookmarked }: NewsCardProps) {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
       </div>
 
-      <div className="absolute bottom-4 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
+      <div className="absolute inset-x-0 bottom-16 p-6 bg-gradient-to-t from-black/90 to-transparent">
   <div className="space-y-4">
     <div className="flex items-center justify-between text-white/80 text-sm">
       <span>{article.source.name}</span>
